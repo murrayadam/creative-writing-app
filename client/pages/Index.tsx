@@ -1,62 +1,165 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { PROMPT_CATEGORIES } from "@/data/prompts";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Copy, Download, FileDown, Shuffle } from "lucide-react";
+import { exportToMarkdown, exportToPdf } from "@/lib/export";
+import { toast } from "sonner";
+
+function useLocalStorage(key: string, initial: string) {
+  const [value, setValue] = useState<string>(() => {
+    try {
+      const v = localStorage.getItem(key);
+      return v ?? initial;
+    } catch {
+      return initial;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, value);
+    } catch {}
+  }, [key, value]);
+  return [value, setValue] as const;
+}
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
+  const [categoryId, setCategoryId] = useState(PROMPT_CATEGORIES[0].id);
+  const category = useMemo(() => PROMPT_CATEGORIES.find((c) => c.id === categoryId)!, [categoryId]);
+  const [promptId, setPromptId] = useState(category.prompts[0].id);
+  const prompt = useMemo(() => category.prompts.find((p) => p.id === promptId)?.text ?? "", [category, promptId]);
   useEffect(() => {
-    fetchDemo();
-  }, []);
+    // When category changes, reset prompt to first
+    setPromptId(PROMPT_CATEGORIES.find((c) => c.id === categoryId)!.prompts[0].id);
+  }, [categoryId]);
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
+  const storageKey = `inkspire:${promptId}`;
+  const [response, setResponse] = useLocalStorage(storageKey, "");
+
+  const wordCount = response.trim() ? response.trim().split(/\s+/).length : 0;
+  const charCount = response.length;
+
+  const randomizePrompt = () => {
+    const p = category.prompts[Math.floor(Math.random() * category.prompts.length)];
+    setPromptId(p.id);
+  };
+
+  const copyResponse = async () => {
     try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
+      await navigator.clipboard.writeText(response);
+      toast.success("Copied response to clipboard");
+    } catch {
+      toast.error("Copy failed");
     }
   };
 
+  const title = `${category.name} — ${prompt.slice(0, 40)}${prompt.length > 40 ? "…" : ""}`;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
+    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+      {/* Sidebar */}
+      <aside className="space-y-4">
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <h2 className="mb-2 text-sm font-medium text-muted-foreground">Category</h2>
+          <Select value={categoryId} onValueChange={setCategoryId}>
+            <SelectTrigger>
+              <SelectValue placeholder="Choose a category" />
+            </SelectTrigger>
+            <SelectContent>
+              {PROMPT_CATEGORIES.map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="mt-3 text-xs text-muted-foreground">{category.description}</p>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-sm font-medium text-muted-foreground">Prompts</h3>
+            <Button variant="secondary" size="sm" onClick={randomizePrompt}>
+              <Shuffle className="h-4 w-4" /> Random
+            </Button>
+          </div>
+          <ul className="space-y-2">
+            {category.prompts.map((p) => (
+              <li key={p.id}>
+                <button
+                  onClick={() => setPromptId(p.id)}
+                  className={`w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground ${p.id === promptId ? "border-primary bg-primary/5" : "border-input bg-background"}`}
+                >
+                  {p.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+
+      {/* Editor */}
+      <section className="space-y-4">
+        <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-transparent p-[1px]">
+          <div className="rounded-2xl bg-card p-6">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
+                <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>{wordCount} words</span>
+                <span aria-hidden>•</span>
+                <span>{charCount} chars</span>
+              </div>
+            </div>
+
+            <Textarea
+              value={response}
+              onChange={(e) => setResponse(e.target.value)}
+              placeholder="Start writing your response here…"
+              className="min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed"
             />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <Button onClick={copyResponse}>
+                <Copy className="h-4 w-4" /> Copy
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  exportToMarkdown({
+                    title,
+                    category: category.name,
+                    prompt,
+                    content: response,
+                  })
+                }
+              >
+                <Download className="h-4 w-4" /> Markdown
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  exportToPdf({
+                    title,
+                    category: category.name,
+                    prompt,
+                    content: response,
+                  })
+                }
+              >
+                <FileDown className="h-4 w-4" /> PDF
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
+          Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
+        </div>
+      </section>
     </div>
   );
 }
