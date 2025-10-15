@@ -37,9 +37,18 @@ export default function Index() {
 
   const storageKey = `inkspire:${promptId}`;
   const [response, setResponse] = useLocalStorage(storageKey, "");
+  const [wordGoal, setWordGoal] = useLocalStorage("inkspire:wordGoal", "0");
 
   const wordCount = response.trim() ? response.trim().split(/\s+/).length : 0;
   const charCount = response.length;
+  const goalNum = parseInt(wordGoal) || 0;
+  const goalProgress = goalNum > 0 ? Math.min((wordCount / goalNum) * 100, 100) : 0;
+
+  useEffect(() => {
+    if (goalNum > 0 && wordCount >= goalNum && wordCount - 1 < goalNum) {
+      toast.success(`🎉 Goal reached! You wrote ${wordCount} words!`);
+    }
+  }, [wordCount, goalNum]);
 
   const randomizePrompt = () => {
     const p = category.prompts[Math.floor(Math.random() * category.prompts.length)];
