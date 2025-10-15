@@ -3,7 +3,8 @@ import { PROMPT_CATEGORIES } from "@/data/prompts";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Download, FileDown, Shuffle, Maximize2, Minimize2 } from "lucide-react";
+import { Copy, Download, FileDown, Shuffle, Maximize2, Minimize2, Target } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { exportToMarkdown, exportToPdf } from "@/lib/export";
 import { toast } from "sonner";
 
