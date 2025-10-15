@@ -192,6 +192,45 @@ export default function Index() {
             </div>
           </div>
 
+          <div className="rounded-xl border bg-card p-4 shadow-sm">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <Target className="h-4 w-4 text-primary" />
+                <span>Word Goal</span>
+              </div>
+              <div className="flex gap-1">
+                {[250, 500, 1000].map((goal) => (
+                  <Button
+                    key={goal}
+                    variant={wordGoal === String(goal) ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setWordGoal(String(goal))}
+                    className="h-7 px-2 text-xs"
+                  >
+                    {goal}
+                  </Button>
+                ))}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setWordGoal("0")}
+                  className="h-7 px-2 text-xs"
+                  disabled={goalNum === 0}
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
+            {goalNum > 0 && (
+              <div className="space-y-1">
+                <Progress value={goalProgress} className="h-2" />
+                <p className="text-xs text-muted-foreground">
+                  {wordCount} / {goalNum} words ({Math.round(goalProgress)}%)
+                </p>
+              </div>
+            )}
+          </div>
+
           <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
             Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
           </div>
