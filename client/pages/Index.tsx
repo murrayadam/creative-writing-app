@@ -55,32 +55,19 @@ export default function Index() {
   };
 
   // Fullscreen writing mode
-  const editorRef = useRef<HTMLDivElement | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  useEffect(() => {
-    const onChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-      if (document.fullscreenElement && editorRef.current) {
-        const ta = editorRef.current.querySelector('textarea') as HTMLTextAreaElement | null;
-        ta?.focus();
-      }
-    };
-    document.addEventListener('fullscreenchange', onChange);
-    return () => document.removeEventListener('fullscreenchange', onChange);
-  }, []);
-
-  const toggleFullscreen = async () => {
-    try {
-      if (!document.fullscreenElement) {
-        await editorRef.current?.requestFullscreen();
-      } else {
-        await document.exitFullscreen();
-      }
-    } catch (e) {
-      console.error('Fullscreen failed', e);
-    }
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
   };
+
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isFullscreen]);
 
   const title = `${category.name} — ${prompt.slice(0, 40)}${prompt.length > 40 ? "…" : ""}`;
 
