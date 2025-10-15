@@ -72,119 +72,155 @@ export default function Index() {
   const title = `${category.name} — ${prompt.slice(0, 40)}${prompt.length > 40 ? "…" : ""}`;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      {/* Sidebar */}
-      <aside className="space-y-4">
-        <div className="rounded-xl border bg-card p-4 shadow-sm">
-          <h2 className="mb-2 text-sm font-medium text-muted-foreground">Category</h2>
-          <Select value={categoryId} onValueChange={setCategoryId}>
-            <SelectTrigger>
-              <SelectValue placeholder="Choose a category" />
-            </SelectTrigger>
-            <SelectContent>
-              {PROMPT_CATEGORIES.map((c) => (
-                <SelectItem key={c.id} value={c.id}>
-                  {c.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <p className="mt-3 text-xs text-muted-foreground">{category.description}</p>
-        </div>
-
-        <div className="rounded-xl border bg-card p-4 shadow-sm">
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-muted-foreground">Prompts</h3>
-            <Button variant="secondary" size="sm" onClick={randomizePrompt}>
-              <Shuffle className="h-4 w-4" /> Random
-            </Button>
+    <>
+      <div className={`grid gap-6 lg:grid-cols-[320px_1fr] ${isFullscreen ? 'hidden' : ''}`}>
+        {/* Sidebar */}
+        <aside className="space-y-4">
+          <div className="rounded-xl border bg-card p-4 shadow-sm">
+            <h2 className="mb-2 text-sm font-medium text-muted-foreground">Category</h2>
+            <Select value={categoryId} onValueChange={setCategoryId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Choose a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {PROMPT_CATEGORIES.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="mt-3 text-xs text-muted-foreground">{category.description}</p>
           </div>
-          <ul className="space-y-2">
-            {category.prompts.map((p) => (
-              <li key={p.id}>
-                <button
-                  onClick={() => setPromptId(p.id)}
-                  className={`w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground ${p.id === promptId ? "border-primary bg-primary/5" : "border-input bg-background"}`}
-                >
-                  {p.text}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
 
-      {/* Editor */}
-      <section className="space-y-4">
-        <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-transparent p-[1px]">
-          <div ref={editorRef} className={`rounded-2xl bg-card p-6 ${isFullscreen ? 'h-screen w-screen max-h-screen flex flex-col' : ''}`}>
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
-                <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
+          <div className="rounded-xl border bg-card p-4 shadow-sm">
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-sm font-medium text-muted-foreground">Prompts</h3>
+              <Button variant="secondary" size="sm" onClick={randomizePrompt}>
+                <Shuffle className="h-4 w-4" /> Random
+              </Button>
+            </div>
+            <ul className="space-y-2">
+              {category.prompts.map((p) => (
+                <li key={p.id}>
+                  <button
+                    onClick={() => setPromptId(p.id)}
+                    className={`w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground ${p.id === promptId ? "border-primary bg-primary/5" : "border-input bg-background"}`}
+                  >
+                    {p.text}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        {/* Editor */}
+        <section className="space-y-4">
+          <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-transparent p-[1px]">
+            <div className="rounded-2xl bg-card p-6">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
+                  <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{wordCount} words</span>
+                  <span aria-hidden>•</span>
+                  <span>{charCount} chars</span>
+                </div>
               </div>
+
+              <Textarea
+                value={response}
+                onChange={(e) => setResponse(e.target.value)}
+                placeholder="Start writing your response here…"
+                className="min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed"
+              />
+
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <Button onClick={copyResponse}>
+                  <Copy className="h-4 w-4" /> Copy
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() =>
+                    exportToMarkdown({
+                      title,
+                      category: category.name,
+                      prompt,
+                      content: response,
+                    })
+                  }
+                >
+                  <Download className="h-4 w-4" /> Markdown
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() =>
+                    exportToPdf({
+                      title,
+                      category: category.name,
+                      prompt,
+                      content: response,
+                    })
+                  }
+                >
+                  <FileDown className="h-4 w-4" /> PDF
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleFullscreen}
+                  aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                  className="ml-1"
+                >
+                  {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
+            Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
+          </div>
+        </section>
+      </div>
+
+      {isFullscreen && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-background p-8">
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
+              <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
+            </div>
+            <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{wordCount} words</span>
                 <span aria-hidden>•</span>
                 <span>{charCount} chars</span>
               </div>
-            </div>
-
-            <Textarea
-              value={response}
-              onChange={(e) => setResponse(e.target.value)}
-              placeholder="Start writing your response here…"
-              className={`min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed ${isFullscreen ? 'flex-1 min-h-0' : ''}`}
-            />
-
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <Button onClick={copyResponse}>
-                <Copy className="h-4 w-4" /> Copy
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  exportToMarkdown({
-                    title,
-                    category: category.name,
-                    prompt,
-                    content: response,
-                  })
-                }
-              >
-                <Download className="h-4 w-4" /> Markdown
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  exportToPdf({
-                    title,
-                    category: category.name,
-                    prompt,
-                    content: response,
-                  })
-                }
-              >
-                <FileDown className="h-4 w-4" /> PDF
-              </Button>
-
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleFullscreen}
-                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-                className="ml-1"
+                aria-label="Exit fullscreen"
               >
-                {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                <Minimize2 className="h-4 w-4" />
               </Button>
             </div>
           </div>
-        </div>
 
-        <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
-          Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
+          <Textarea
+            value={response}
+            onChange={(e) => setResponse(e.target.value)}
+            placeholder="Start writing your response here…"
+            className="flex-1 resize-none rounded-xl bg-background/60 p-6 text-lg leading-relaxed"
+            autoFocus
+          />
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 }
