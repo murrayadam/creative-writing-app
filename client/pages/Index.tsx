@@ -249,6 +249,15 @@ export default function Index() {
                 <span>{wordCount} words</span>
                 <span aria-hidden>•</span>
                 <span>{charCount} chars</span>
+                {goalNum > 0 && (
+                  <>
+                    <span aria-hidden>•</span>
+                    <span className="flex items-center gap-1">
+                      <Target className="h-3 w-3" />
+                      {goalNum} ({Math.round(goalProgress)}%)
+                    </span>
+                  </>
+                )}
               </div>
               <Button
                 variant="ghost"
