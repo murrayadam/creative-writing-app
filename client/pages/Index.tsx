@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PROMPT_CATEGORIES } from "@/data/prompts";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Download, FileDown, Shuffle } from "lucide-react";
+import { Copy, Download, FileDown, Shuffle, Maximize2, Minimize2 } from "lucide-react";
 import { exportToMarkdown, exportToPdf } from "@/lib/export";
 import { toast } from "sonner";
 
@@ -51,6 +52,34 @@ export default function Index() {
       toast.success("Copied response to clipboard");
     } catch {
       toast.error("Copy failed");
+    }
+  };
+
+  // Fullscreen writing mode
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const onChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+      if (document.fullscreenElement && editorRef.current) {
+        const ta = editorRef.current.querySelector('textarea') as HTMLTextAreaElement | null;
+        ta?.focus();
+      }
+    };
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await editorRef.current?.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (e) {
+      console.error('Fullscreen failed', e);
     }
   };
 
