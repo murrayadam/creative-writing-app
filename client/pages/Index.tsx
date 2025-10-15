@@ -131,7 +131,7 @@ export default function Index() {
       {/* Editor */}
       <section className="space-y-4">
         <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-transparent p-[1px]">
-          <div className="rounded-2xl bg-card p-6">
+          <div ref={editorRef} className={`rounded-2xl bg-card p-6 ${isFullscreen ? 'h-screen w-screen max-h-screen flex flex-col' : ''}`}>
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
@@ -148,7 +148,7 @@ export default function Index() {
               value={response}
               onChange={(e) => setResponse(e.target.value)}
               placeholder="Start writing your response here…"
-              className="min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed"
+              className={`min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed ${isFullscreen ? 'flex-1 min-h-0' : ''}`}
             />
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -180,6 +180,16 @@ export default function Index() {
                 }
               >
                 <FileDown className="h-4 w-4" /> PDF
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleFullscreen}
+                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                className="ml-1"
+              >
+                {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
               </Button>
             </div>
           </div>
