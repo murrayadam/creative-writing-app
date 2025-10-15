@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PROMPT_CATEGORIES } from "@/data/prompts";
 import { Button } from "@/components/ui/button";
