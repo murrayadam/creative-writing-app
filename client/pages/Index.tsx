@@ -2,8 +2,22 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { PROMPT_CATEGORIES } from "@/data/prompts";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Download, FileDown, Shuffle, Maximize2, Minimize2, Target } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Copy,
+  Download,
+  FileDown,
+  Shuffle,
+  Maximize2,
+  Minimize2,
+  Target,
+} from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { exportToMarkdown, exportToPdf } from "@/lib/export";
 import { toast } from "sonner";
@@ -27,12 +41,20 @@ function useLocalStorage(key: string, initial: string) {
 
 export default function Index() {
   const [categoryId, setCategoryId] = useState(PROMPT_CATEGORIES[0].id);
-  const category = useMemo(() => PROMPT_CATEGORIES.find((c) => c.id === categoryId)!, [categoryId]);
+  const category = useMemo(
+    () => PROMPT_CATEGORIES.find((c) => c.id === categoryId)!,
+    [categoryId],
+  );
   const [promptId, setPromptId] = useState(category.prompts[0].id);
-  const prompt = useMemo(() => category.prompts.find((p) => p.id === promptId)?.text ?? "", [category, promptId]);
+  const prompt = useMemo(
+    () => category.prompts.find((p) => p.id === promptId)?.text ?? "",
+    [category, promptId],
+  );
   useEffect(() => {
     // When category changes, reset prompt to first
-    setPromptId(PROMPT_CATEGORIES.find((c) => c.id === categoryId)!.prompts[0].id);
+    setPromptId(
+      PROMPT_CATEGORIES.find((c) => c.id === categoryId)!.prompts[0].id,
+    );
   }, [categoryId]);
 
   const storageKey = `inkspire:${promptId}`;
@@ -42,7 +64,8 @@ export default function Index() {
   const wordCount = response.trim() ? response.trim().split(/\s+/).length : 0;
   const charCount = response.length;
   const goalNum = parseInt(wordGoal) || 0;
-  const goalProgress = goalNum > 0 ? Math.min((wordCount / goalNum) * 100, 100) : 0;
+  const goalProgress =
+    goalNum > 0 ? Math.min((wordCount / goalNum) * 100, 100) : 0;
 
   useEffect(() => {
     if (goalNum > 0 && wordCount >= goalNum && wordCount - 1 < goalNum) {
@@ -51,7 +74,8 @@ export default function Index() {
   }, [wordCount, goalNum]);
 
   const randomizePrompt = () => {
-    const p = category.prompts[Math.floor(Math.random() * category.prompts.length)];
+    const p =
+      category.prompts[Math.floor(Math.random() * category.prompts.length)];
     setPromptId(p.id);
   };
 
@@ -73,9 +97,9 @@ export default function Index() {
 
   useEffect(() => {
     if (isFullscreen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
   }, [isFullscreen]);
 
@@ -83,11 +107,15 @@ export default function Index() {
 
   return (
     <>
-      <div className={`grid gap-6 lg:grid-cols-[320px_1fr] ${isFullscreen ? 'hidden' : ''}`}>
+      <div
+        className={`grid gap-6 lg:grid-cols-[320px_1fr] ${isFullscreen ? "hidden" : ""}`}
+      >
         {/* Sidebar */}
         <aside className="space-y-4">
           <div className="notebook-card rounded-xl p-4 shadow-sm">
-            <h2 className="mb-2 text-sm font-medium text-muted-foreground">Category</h2>
+            <h2 className="mb-2 text-sm font-medium text-muted-foreground">
+              Category
+            </h2>
             <Select value={categoryId} onValueChange={setCategoryId}>
               <SelectTrigger>
                 <SelectValue placeholder="Choose a category" />
@@ -100,12 +128,16 @@ export default function Index() {
                 ))}
               </SelectContent>
             </Select>
-            <p className="mt-3 text-xs text-muted-foreground">{category.description}</p>
+            <p className="mt-3 text-xs text-muted-foreground">
+              {category.description}
+            </p>
           </div>
 
           <div className="notebook-card rounded-xl p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-medium text-muted-foreground">Prompts</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Prompts
+              </h3>
               <Button variant="secondary" size="sm" onClick={randomizePrompt}>
                 <Shuffle className="h-4 w-4" /> Random
               </Button>
@@ -131,7 +163,9 @@ export default function Index() {
             <div className="notebook-card rounded-2xl p-6">
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Prompt
+                  </div>
                   <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -183,10 +217,16 @@ export default function Index() {
                   variant="ghost"
                   size="icon"
                   onClick={toggleFullscreen}
-                  aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                  aria-label={
+                    isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+                  }
                   className="ml-1"
                 >
-                  {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                  {isFullscreen ? (
+                    <Minimize2 className="h-4 w-4" />
+                  ) : (
+                    <Maximize2 className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -232,7 +272,8 @@ export default function Index() {
           </div>
 
           <div className="notebook-card rounded-xl p-4 text-sm text-muted-foreground shadow-sm">
-            Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
+            Tips: Your work auto-saves per prompt in this browser. Use the
+            Random button for inspiration.
           </div>
         </section>
       </div>
@@ -241,7 +282,9 @@ export default function Index() {
         <div className="fixed inset-0 z-50 flex flex-col bg-background p-8">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                Prompt
+              </div>
               <h1 className="text-xl font-bold leading-snug">{prompt}</h1>
             </div>
             <div className="flex items-center gap-4">

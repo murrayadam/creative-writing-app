@@ -103,14 +103,29 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Rubik", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+    font-family:
+      "Rubik",
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      Segoe UI,
+      Roboto,
+      Ubuntu,
+      Cantarell,
+      Noto Sans,
+      Arial;
     /* wide-ruled notebook paper: horizontal blue lines + left red margin */
     background-image:
-      linear-gradient(to bottom, rgba(0,70,170,0.08) 1px, transparent 1px),
-      linear-gradient(to right, rgba(220,40,40,0.28) 2px, transparent 2px);
-    background-size: 100% 48px, 72px 100%;
+      linear-gradient(to bottom, rgba(0, 70, 170, 0.08) 1px, transparent 1px),
+      linear-gradient(to right, rgba(220, 40, 40, 0.28) 2px, transparent 2px);
+    background-size:
+      100% 48px,
+      72px 100%;
     background-repeat: repeat, no-repeat;
-    background-position: 0 0, 48px 0;
+    background-position:
+      0 0,
+      48px 0;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
@@ -126,8 +141,12 @@
 
   /* notebook card and sticker tweaks to fit theme */
   .sticker {
-    background: linear-gradient(180deg, hsl(var(--accent)) 0%, color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--accent)) 0%,
+      color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%
+    );
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     border: 1px dashed color-mix(in srgb, hsl(var(--border)), black 8%);
   }
@@ -135,13 +154,17 @@
   .notebook-card {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
   }
 
   /* school-stationery styles */
   .sticker {
-    background: linear-gradient(180deg, hsl(var(--accent)) 0%, color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--accent)) 0%,
+      color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%
+    );
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     border: 1px dashed color-mix(in srgb, hsl(var(--border)), black 8%);
   }
@@ -149,6 +172,6 @@
   .notebook-card {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
   }
 }

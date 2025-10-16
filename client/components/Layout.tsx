@@ -3,7 +3,11 @@ import { cn } from "@/lib/utils";
 
 export default function Layout() {
   return (
-    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground")}>
+    <div
+      className={cn(
+        "min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground",
+      )}
+    >
       <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
@@ -11,19 +15,26 @@ export default function Layout() {
               ✏️
             </div>
             <div>
-              <div className="font-extrabold tracking-tight text-2xl" style={{fontFamily: 'Rubik, sans-serif'}}>
+              <div
+                className="font-extrabold tracking-tight text-2xl"
+                style={{ fontFamily: "Rubik, sans-serif" }}
+              >
                 Inkspire
               </div>
             </div>
           </Link>
-          <div className="hidden md:block text-sm text-muted-foreground">Grab a pencil, pick a prompt, and write.</div>
+          <div className="hidden md:block text-sm text-muted-foreground">
+            Grab a pencil, pick a prompt, and write.
+          </div>
         </div>
       </header>
       <main className="container mx-auto px-4 py-8">
         <Outlet />
       </main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        <div className="container mx-auto">© {new Date().getFullYear()} Inkspire — just start writing</div>
+        <div className="container mx-auto">
+          © {new Date().getFullYear()} Inkspire — just start writing
+        </div>
       </footer>
     </div>
   );
