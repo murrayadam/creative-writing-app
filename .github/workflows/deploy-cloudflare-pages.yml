@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Build & Test
 
 on:
   push:
@@ -9,11 +9,8 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
 
     steps:
       - name: Checkout code
@@ -36,25 +33,8 @@ jobs:
       - name: Run type checking
         run: pnpm typecheck
 
+      - name: Run tests
+        run: pnpm test
+
       - name: Build for production
-        run: pnpm build:pages
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist/spa
-
-      - name: Comment PR with deployment
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '✅ Build successful! Preview available after merging to main.'
-            })
+        run: pnpm build
