@@ -231,7 +231,7 @@ export default function Index() {
             )}
           </div>
 
-          <div className="rounded-xl border bg-card p-4 text-sm text-muted-foreground shadow-sm">
+          <div className="notebook-card rounded-xl p-4 text-sm text-muted-foreground shadow-sm">
             Tips: Your work auto-saves per prompt in this browser. Use the Random button for inspiration.
           </div>
         </section>
