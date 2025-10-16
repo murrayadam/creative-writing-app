@@ -182,7 +182,7 @@ export default function Index() {
               <Textarea
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
-                placeholder="Start writing your response here…"
+                placeholder="Write your response here…"
                 className="min-h-[320px] resize-y rounded-xl bg-background/60 p-4 text-base leading-relaxed"
               />
 
@@ -320,7 +320,7 @@ export default function Index() {
           <Textarea
             value={response}
             onChange={(e) => setResponse(e.target.value)}
-            placeholder="Start writing your response here…"
+            placeholder="Write your response here…"
             className="flex-1 resize-none rounded-xl bg-background/60 p-6 text-lg leading-relaxed"
             autoFocus
           />
