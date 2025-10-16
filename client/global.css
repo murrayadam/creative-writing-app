@@ -103,10 +103,14 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Patrick Hand", "Montserrat", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
-    /* subtle ruled paper lines */
-    background-image: linear-gradient(to bottom, transparent 0px, transparent 56px, rgba(0,0,0,0.04) 56px);
-    background-size: 100% 56px;
+    font-family: "Rubik", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+    /* wide-ruled notebook paper: horizontal blue lines + left red margin */
+    background-image:
+      linear-gradient(to bottom, rgba(0,70,170,0.08) 1px, transparent 1px),
+      linear-gradient(to right, rgba(220,40,40,0.28) 2px, transparent 2px);
+    background-size: 100% 48px, 72px 100%;
+    background-repeat: repeat, no-repeat;
+    background-position: 0 0, 48px 0;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
@@ -118,6 +122,47 @@
   code {
     overflow-x: auto;
     white-space: pre;
+  }
+
+  /* spiral binding on left edge */
+  .spiral-binding {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    pointer-events: none;
+    z-index: 40;
+    display: block;
+  }
+
+  .spiral-binding::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 24px;
+    bottom: 24px;
+    width: 24px;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.2) 40%, transparent 41%);
+    background-size: 28px 48px;
+    background-repeat: repeat-y;
+    border-right: 6px solid rgba(0,0,0,0.04);
+    border-radius: 0 8px 8px 0;
+    transform: translateX(0);
+  }
+
+  /* notebook card and sticker tweaks to fit theme */
+  .sticker {
+    background: linear-gradient(180deg, hsl(var(--accent)) 0%, color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    border: 1px dashed color-mix(in srgb, hsl(var(--border)), black 8%);
+  }
+
+  .notebook-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
   }
 
   /* school-stationery styles */
