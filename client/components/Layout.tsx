@@ -14,7 +14,6 @@ export default function Layout() {
               <div className="font-extrabold tracking-tight text-2xl" style={{fontFamily: 'Rubik, sans-serif'}}>
                 Inkspire
               </div>
-              <div className="text-xs text-muted-foreground">Back-to-school vibes • 90s supplies</div>
             </div>
           </Link>
           <div className="hidden md:block text-sm text-muted-foreground">Grab a pencil, pick a prompt, and write.</div>
@@ -24,7 +23,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        <div className="container mx-auto">© {new Date().getFullYear()} Inkspire — pass the highlighter</div>
+        <div className="container mx-auto">© {new Date().getFullYear()} Inkspire — just start writing</div>
       </footer>
     </div>
   );
