@@ -15,6 +15,24 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/react-router-dom")) {
+            return "react-router-dom";
+          }
+          if (id.includes("node_modules/react-dom")) {
+            return "react-dom";
+          }
+          if (id.includes("node_modules/react")) {
+            return "react";
+          }
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
   },
   plugins: [react(), expressPlugin()],
   resolve: {
