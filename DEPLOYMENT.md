@@ -67,23 +67,27 @@ The `_redirects` file ensures all unmatched routes serve `index.html`, enabling 
 ## Troubleshooting
 
 ### Build fails
+
 - Check `pnpm build` runs locally without errors
 - Verify Node.js version (18+) in GitHub Actions
 - Check `package.json` build scripts
 
 ### Routes 404 after deploy
+
 - Ensure `_redirects` file exists in project root
 - Verify build output is in `dist/spa/`
 
 ## Monitoring & Analytics
 
 View deployment status and analytics:
+
 - Cloudflare dashboard → Pages → blankrite
 - GitHub Actions workflow runs (if connected to GitHub)
 
 ## Rollback
 
 To rollback to a previous deployment:
+
 1. Go to Cloudflare dashboard → Pages → blankrite → Deployments
 2. Find the deployment you want to rollback to
 3. Click the three dots → Rollback to this deployment
