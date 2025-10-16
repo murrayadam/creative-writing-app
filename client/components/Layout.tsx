@@ -19,12 +19,12 @@ export default function Layout() {
                 className="font-extrabold tracking-tight text-2xl"
                 style={{ fontFamily: "Rubik, sans-serif" }}
               >
-                Inkspire
+                blankrite
               </div>
             </div>
           </Link>
           <div className="hidden md:block text-sm text-muted-foreground">
-            Grab a pencil, pick a prompt, and write.
+            Daily prompts. Build your writing habit.
           </div>
         </div>
       </header>
@@ -33,7 +33,7 @@ export default function Layout() {
       </main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
         <div className="container mx-auto">
-          © {new Date().getFullYear()} Inkspire — just start writing
+          © {new Date().getFullYear()} blankrite — write every day
         </div>
       </footer>
     </div>
