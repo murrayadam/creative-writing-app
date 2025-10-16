@@ -86,7 +86,7 @@ export default function Index() {
       <div className={`grid gap-6 lg:grid-cols-[320px_1fr] ${isFullscreen ? 'hidden' : ''}`}>
         {/* Sidebar */}
         <aside className="space-y-4">
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <div className="notebook-card rounded-xl p-4 shadow-sm">
             <h2 className="mb-2 text-sm font-medium text-muted-foreground">Category</h2>
             <Select value={categoryId} onValueChange={setCategoryId}>
               <SelectTrigger>
@@ -103,7 +103,7 @@ export default function Index() {
             <p className="mt-3 text-xs text-muted-foreground">{category.description}</p>
           </div>
 
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <div className="notebook-card rounded-xl p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
               <h3 className="text-sm font-medium text-muted-foreground">Prompts</h3>
               <Button variant="secondary" size="sm" onClick={randomizePrompt}>
@@ -192,7 +192,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
+          <div className="notebook-card rounded-xl p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <Target className="h-4 w-4 text-primary" />
