@@ -3,8 +3,7 @@ import { cn } from "@/lib/utils";
 
 export default function Layout() {
   return (
-    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground relative")}>
-      <div className="spiral-binding" aria-hidden></div>
+    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground")}>
       <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
