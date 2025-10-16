@@ -1,4 +1,4 @@
-# Inkspire 📝
+# Blankrite 📝
 
 A modern, beautiful creative writing app that provides writing prompts and a distraction-free writing environment. Inspired by 90s school supplies with a wide-ruled notebook aesthetic.
 
