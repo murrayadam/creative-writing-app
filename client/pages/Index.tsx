@@ -128,7 +128,7 @@ export default function Index() {
         {/* Editor */}
         <section className="space-y-4">
           <div className="rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-transparent p-[1px]">
-            <div className="rounded-2xl bg-card p-6">
+            <div className="notebook-card rounded-2xl p-6">
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <div className="text-xs uppercase tracking-wider text-muted-foreground">Prompt</div>
