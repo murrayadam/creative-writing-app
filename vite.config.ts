@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
     rollupOptions: {
-      input: "index.html",
       output: {
         manualChunks(id) {
           if (id.includes("node_modules/react-router-dom")) {
