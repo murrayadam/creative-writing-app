@@ -27,12 +27,16 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("node_modules/react")) {
             return "react";
           }
+          if (id.includes("node_modules/@radix-ui")) {
+            return "radix-ui";
+          }
           if (id.includes("node_modules")) {
             return "vendor";
           }
         },
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
