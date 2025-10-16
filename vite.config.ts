@@ -16,26 +16,10 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("node_modules/react-router-dom")) {
-            return "react-router-dom";
-          }
-          if (id.includes("node_modules/react-dom")) {
-            return "react-dom";
-          }
-          if (id.includes("node_modules/react")) {
-            return "react";
-          }
-          if (id.includes("node_modules/@radix-ui")) {
-            return "radix-ui";
-          }
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
+        manualChunks: undefined,
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 2000,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
