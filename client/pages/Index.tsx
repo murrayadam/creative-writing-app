@@ -193,7 +193,7 @@ export default function Index() {
           </div>
 
           <div className="notebook-card rounded-xl p-4 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <Target className="h-4 w-4 text-primary" />
                 <span>Word Goal</span>
