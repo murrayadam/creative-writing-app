@@ -12,82 +12,86 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
+    /* Paper background, warm off-white */
+    --background: 42 100% 98%;
+    --foreground: 222 12% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    /* Card = lined paper */
+    --card: 42 100% 99%;
+    --card-foreground: 222 12% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
+    --popover: 42 100% 99%;
+    --popover-foreground: 222 12% 12%;
 
-    --primary: 262 83% 58%;
-    --primary-foreground: 210 40% 98%;
+    /* 90s-inspired highlighter + ink */
+    --primary: 280 90% 52%; /* neon purple */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 224 71% 4%;
+    --secondary: 199 89% 42%; /* teal */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 8% 46%;
+    --muted: 45 95% 97%; /* pale yellow pages */
+    --muted-foreground: 220 10% 40%;
 
-    --accent: 199 89% 60%;
-    --accent-foreground: 224 71% 4%;
+    --accent: 54 100% 66%; /* highlighter yellow */
+    --accent-foreground: 222 12% 12%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262 83% 58%;
+    --border: 210 20% 90%;
+    --input: 210 20% 96%;
+    --ring: 280 90% 52%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5% 26%;
-    --sidebar-primary: 262 83% 58%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 199 89% 60%;
-    --sidebar-accent-foreground: 224 71% 4%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 91% 60%;
+    /* Sidebar (spiral binding feel) */
+    --sidebar-background: 42 95% 97%;
+    --sidebar-foreground: 222 12% 12%;
+    --sidebar-primary: 280 90% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 199 89% 42%;
+    --sidebar-accent-foreground: 222 12% 12%;
+    --sidebar-border: 210 20% 90%;
+    --sidebar-ring: 280 90% 52%;
   }
 
   .dark {
-    --background: 229 84% 5%;
-    --foreground: 210 40% 98%;
+    --background: 229 10% 10%;
+    --foreground: 0 0% 98%;
 
-    --card: 229 84% 5%;
-    --card-foreground: 210 40% 98%;
+    --card: 229 10% 12%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 229 84% 5%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 229 10% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 262 83% 14%;
+    --primary: 280 90% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 229 21% 12%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 199 89% 42%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 229 21% 12%;
+    --muted: 229 10% 12%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 199 89% 60%;
-    --accent-foreground: 229 84% 5%;
+    --accent: 54 100% 66%;
+    --accent-foreground: 229 10% 12%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 229 21% 12%;
-    --input: 229 21% 12%;
-    --ring: 262 83% 70%;
+    --border: 229 10% 14%;
+    --input: 229 10% 14%;
+    --ring: 280 90% 60%;
 
-    --sidebar-background: 240 6% 10%;
-    --sidebar-foreground: 240 5% 96%;
-    --sidebar-primary: 262 83% 58%;
+    --sidebar-background: 229 10% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 280 90% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 199 89% 60%;
-    --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 240 4% 16%;
+    --sidebar-accent: 199 89% 42%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 229 10% 14%;
     --sidebar-ring: 217 91% 60%;
   }
 }
@@ -99,7 +103,10 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: "Patrick Hand", "Montserrat", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+    /* subtle ruled paper lines */
+    background-image: linear-gradient(to bottom, transparent 0px, transparent 56px, rgba(0,0,0,0.04) 56px);
+    background-size: 100% 56px;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
@@ -111,5 +118,19 @@
   code {
     overflow-x: auto;
     white-space: pre;
+  }
+
+  /* school-stationery styles */
+  .sticker {
+    background: linear-gradient(180deg, hsl(var(--accent)) 0%, color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    border: 1px dashed color-mix(in srgb, hsl(var(--border)), black 8%);
+  }
+
+  .notebook-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
   }
 }
