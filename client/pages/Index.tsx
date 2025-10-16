@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { PROMPT_CATEGORIES } from "@/data/prompts";
+import { PROMPT_CATEGORIES, getRotatedPrompts } from "@/data/prompts";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -45,17 +45,21 @@ export default function Index() {
     () => PROMPT_CATEGORIES.find((c) => c.id === categoryId)!,
     [categoryId],
   );
-  const [promptId, setPromptId] = useState(category.prompts[0].id);
+
+  const rotatedPrompts = useMemo(
+    () => getRotatedPrompts(category.prompts),
+    [category],
+  );
+
+  const [promptId, setPromptId] = useState(rotatedPrompts[0].id);
   const prompt = useMemo(
     () => category.prompts.find((p) => p.id === promptId)?.text ?? "",
     [category, promptId],
   );
   useEffect(() => {
-    // When category changes, reset prompt to first
-    setPromptId(
-      PROMPT_CATEGORIES.find((c) => c.id === categoryId)!.prompts[0].id,
-    );
-  }, [categoryId]);
+    // When category changes, reset prompt to first of rotated prompts
+    setPromptId(rotatedPrompts[0].id);
+  }, [categoryId, rotatedPrompts]);
 
   const storageKey = `blankrite:${promptId}`;
   const [response, setResponse] = useLocalStorage(storageKey, "");
@@ -143,7 +147,7 @@ export default function Index() {
               </Button>
             </div>
             <ul className="space-y-2">
-              {category.prompts.map((p) => (
+              {rotatedPrompts.map((p) => (
                 <li key={p.id}>
                   <button
                     onClick={() => setPromptId(p.id)}
