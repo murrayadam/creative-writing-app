@@ -1,17 +1,19 @@
 import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export default function Layout() {
   return (
-    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground")}>
+    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground relative")}>
+      <div className="spiral-binding" aria-hidden></div>
       <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
-            <div className="rounded-md bg-primary p-2 text-white shadow-sticker" style={{fontFamily: 'Patrick Hand, sans-serif'}}>
+            <div className="rounded-md bg-primary p-2 text-white shadow-sticker">
               ✏️
             </div>
             <div>
-              <div className="font-extrabold tracking-tight text-2xl" style={{fontFamily: 'Patrick Hand, sans-serif'}}>
+              <div className="font-extrabold tracking-tight text-2xl" style={{fontFamily: 'Rubik, sans-serif'}}>
                 Inkspire
               </div>
               <div className="text-xs text-muted-foreground">Back-to-school vibes • 90s supplies</div>
