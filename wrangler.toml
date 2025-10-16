@@ -1,15 +1,6 @@
 name = "blankrite"
 type = "javascript"
 compatibility_date = "2024-12-16"
-compatibility_flags = ["nodejs_compat"]
 
 # Build configuration for Cloudflare Pages
 build = { command = "pnpm build:client", cwd = "." }
-main = "dist/spa/index.html"
-
-# Environment variables
-[env.production]
-vars = { ENVIRONMENT = "production" }
-
-[env.preview]
-vars = { ENVIRONMENT = "preview" }
