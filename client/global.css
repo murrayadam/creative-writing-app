@@ -124,33 +124,6 @@
     white-space: pre;
   }
 
-  /* spiral binding on left edge */
-  .spiral-binding {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 64px;
-    pointer-events: none;
-    z-index: 40;
-    display: block;
-  }
-
-  .spiral-binding::before {
-    content: "";
-    position: absolute;
-    left: 12px;
-    top: 24px;
-    bottom: 24px;
-    width: 24px;
-    background-image: radial-gradient(circle, rgba(0,0,0,0.2) 40%, transparent 41%);
-    background-size: 28px 48px;
-    background-repeat: repeat-y;
-    border-right: 6px solid rgba(0,0,0,0.04);
-    border-radius: 0 8px 8px 0;
-    transform: translateX(0);
-  }
-
   /* notebook card and sticker tweaks to fit theme */
   .sticker {
     background: linear-gradient(180deg, hsl(var(--accent)) 0%, color-mix(in srgb, hsl(var(--accent)) 70%, white) 100%);
