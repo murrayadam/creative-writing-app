@@ -11,11 +11,6 @@ export default function Layout() {
       <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F5cf20facd67a4839b30520b324538d7e%2F333f764715f14e6b8d690ea1e8d942fa?format=webp&width=800"
-              alt="blankrite logo"
-              className="h-12 w-12 rounded-md shadow-lg"
-            />
             <div>
               <div
                 className="font-extrabold tracking-tight text-2xl"
