@@ -172,8 +172,8 @@ pnpm typecheck
 
 Responses are saved per prompt using the prompt ID as a key:
 
-- Key format: `inkspire:${promptId}`
-- Word goals are stored in `inkspire:wordGoal`
+- Key format: `blankrite:${promptId}`
+- Word goals are stored in `blankrite:wordGoal`
 - Data persists across browser sessions
 
 ### Export Utilities
@@ -239,7 +239,7 @@ For production, use Netlify or Vercel environment variables if deploying.
 
 - Check browser localStorage is enabled
 - Open DevTools > Application > Local Storage
-- Look for keys starting with `inkspire:`
+- Look for keys starting with `blankrite:`
 
 ### Styling issues (colors too bright or muted)
 
