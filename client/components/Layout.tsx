@@ -3,20 +3,28 @@ import { cn } from "@/lib/utils";
 
 export default function Layout() {
   return (
-    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground")}> 
-      <header className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
-        <div className="container mx-auto flex h-16 items-center justify-between">
-          <Link to="/" className="font-extrabold tracking-tight text-xl">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Inkspire</span>
+    <div className={cn("min-h-screen bg-gradient-to-br from-background to-muted/40 text-foreground")}>
+      <header className="sticky top-0 z-30 border-b bg-background/90 backdrop-blur">
+        <div className="container mx-auto flex h-20 items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-3">
+            <div className="rounded-md bg-primary p-2 text-white shadow-sticker" style={{fontFamily: 'Patrick Hand, sans-serif'}}>
+              ✏️
+            </div>
+            <div>
+              <div className="font-extrabold tracking-tight text-2xl" style={{fontFamily: 'Patrick Hand, sans-serif'}}>
+                Inkspire
+              </div>
+              <div className="text-xs text-muted-foreground">Back-to-school vibes • 90s supplies</div>
+            </div>
           </Link>
-          <div className="text-xs text-muted-foreground">Creative writing, beautifully simple</div>
+          <div className="hidden md:block text-sm text-muted-foreground">Grab a pencil, pick a prompt, and write.</div>
         </div>
       </header>
       <main className="container mx-auto px-4 py-8">
         <Outlet />
       </main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        <div className="container mx-auto">© {new Date().getFullYear()} Inkspire</div>
+        <div className="container mx-auto">© {new Date().getFullYear()} Inkspire — pass the highlighter</div>
       </footer>
     </div>
   );
