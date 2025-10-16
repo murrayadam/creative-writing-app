@@ -57,9 +57,9 @@ export default function Index() {
     );
   }, [categoryId]);
 
-  const storageKey = `inkspire:${promptId}`;
+  const storageKey = `blankrite:${promptId}`;
   const [response, setResponse] = useLocalStorage(storageKey, "");
-  const [wordGoal, setWordGoal] = useLocalStorage("inkspire:wordGoal", "0");
+  const [wordGoal, setWordGoal] = useLocalStorage("blankrite:wordGoal", "0");
 
   const wordCount = response.trim() ? response.trim().split(/\s+/).length : 0;
   const charCount = response.length;
