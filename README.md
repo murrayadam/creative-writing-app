@@ -1,6 +1,6 @@
 # Blankrite 📝
 
-A modern, beautiful creative writing app that provides writing prompts and a distraction-free writing environment. Inspired by 90s school supplies with a wide-ruled notebook aesthetic.
+A modern, beautiful creative writing app designed to help you build a daily writing habit. Get daily prompts, track progress with word goals and streaks, and write in a distraction-free environment. Inspired by 90s school supplies with a wide-ruled notebook aesthetic.
 
 ## Features
 
